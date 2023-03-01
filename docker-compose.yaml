@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  moviemess:
+    container_name: moviemess
+    depends_on:
+      - postgres
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    restart: on-failure
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - "6543:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: moviemess
+      POSTGRES_DB: moviemess
+volumes:
+  postgres:
+    name: moviemess-db
