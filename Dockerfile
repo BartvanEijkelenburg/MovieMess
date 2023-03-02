@@ -12,7 +12,7 @@ RUN npm install -g blitz && npm ci --ignore-scripts && npm prune --production &&
 
 FROM base as build
 ENV NODE_ENV=production
-RUN blitz prisma generate && blitz build
+RUN ./node_modules/.bin/prisma generate && blitz build
 
 FROM build as prod
 ENV NODE_ENV=production

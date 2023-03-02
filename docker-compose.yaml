@@ -13,7 +13,7 @@ services:
     restart: on-failure
   postgres:
     image: postgres
-    container_name: postgres
+    container_name: moviemess-db
     restart: always
     ports:
       - "6543:5432"

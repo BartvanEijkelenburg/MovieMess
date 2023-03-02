@@ -1,10 +1,8 @@
-import { ErrorFallbackProps, ErrorComponent, ErrorBoundary, AppProps } from "@blitzjs/next";
+import { AppProps, ErrorBoundary, ErrorComponent, ErrorFallbackProps } from "@blitzjs/next";
 import { AuthenticationError, AuthorizationError } from "blitz";
 import React from "react";
 import { withBlitz } from "src/blitz-client";
 import "src/styles/globals.css";
-
-import "app/core/styles/index.css";
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
   if (error instanceof AuthenticationError) {
