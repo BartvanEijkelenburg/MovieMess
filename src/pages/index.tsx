@@ -1,11 +1,11 @@
-import { Suspense } from "react"
-import Link from "next/link"
-import Layout from "src/core/layouts/Layout"
-import { useCurrentUser } from "src/users/hooks/useCurrentUser"
-import logout from "src/auth/mutations/logout"
-import { useMutation } from "@blitzjs/rpc"
-import { Routes, BlitzPage } from "@blitzjs/next"
-import styles from "src/styles/Home.module.css"
+import { Suspense } from "react";
+import Link from "next/link";
+import Layout from "src/core/layouts/Layout";
+import { useCurrentUser } from "src/users/hooks/useCurrentUser";
+import logout from "src/auth/mutations/logout";
+import { useMutation } from "@blitzjs/rpc";
+import { Routes, BlitzPage } from "@blitzjs/next";
+import styles from "src/styles/Home.module.css";
 
 /*
  * This file is just for a pleasant getting started page for your new app.
@@ -13,8 +13,8 @@ import styles from "src/styles/Home.module.css"
  */
 
 const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
+  const currentUser = useCurrentUser();
+  const [logoutMutation] = useMutation(logout);
 
   if (currentUser) {
     return (
@@ -22,7 +22,7 @@ const UserInfo = () => {
         <button
           className={styles.button}
           onClick={async () => {
-            await logoutMutation()
+            await logoutMutation();
           }}
         >
           Logout
@@ -33,7 +33,7 @@ const UserInfo = () => {
           User role: <code>{currentUser.role}</code>
         </div>
       </>
-    )
+    );
   } else {
     return (
       <>
@@ -44,9 +44,9 @@ const UserInfo = () => {
           <strong>Login</strong>
         </Link>
       </>
-    )
+    );
   }
-}
+};
 
 const Home: BlitzPage = () => {
   return (
@@ -189,7 +189,7 @@ const Home: BlitzPage = () => {
         </footer>
       </div>
     </Layout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

@@ -1,13 +1,12 @@
-import { Ctx } from "blitz"
-import db from "db"
+import { Ctx } from "blitz";
+import db, { Prisma } from "db";
 
 export default async function getCurrentUser(_ = null, { session }: Ctx) {
-  if (!session.userId) return null
+  if (!session.userId) return null;
 
-  const user = await db.user.findFirst({
+  const user = await db.user.findFirstOrThrow<Prisma.UserFindFirstOrThrowArgs>({
     where: { id: session.userId },
-    select: { id: true, name: true, email: true, role: true },
-  })
+  });
 
-  return user
+  return user;
 }

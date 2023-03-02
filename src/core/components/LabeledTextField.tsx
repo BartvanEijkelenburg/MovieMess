@@ -1,5 +1,5 @@
-import { forwardRef, ComponentPropsWithoutRef, PropsWithoutRef } from "react"
-import { useField, UseFieldConfig } from "react-final-form"
+import { forwardRef, ComponentPropsWithoutRef, PropsWithoutRef } from "react";
+import { useField, UseFieldConfig } from "react-final-form";
 
 export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
   /** Field name. */
@@ -25,9 +25,9 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
           : // Converting `""` to `null` ensures empty values will be set to null in the DB
             (v) => (v === "" ? null : v),
       ...fieldProps,
-    })
+    });
 
-    const normalizedError = Array.isArray(error) ? error.join(", ") : error || submitError
+    const normalizedError = Array.isArray(error) ? error.join(", ") : error || submitError;
 
     return (
       <div {...outerProps}>
@@ -59,8 +59,8 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
           }
         `}</style>
       </div>
-    )
+    );
   }
-)
+);
 
-export default LabeledTextField
+export default LabeledTextField;
