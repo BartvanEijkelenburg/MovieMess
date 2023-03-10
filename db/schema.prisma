@@ -13,13 +13,14 @@ generator client {
 // --------------------------------------
 
 model User {
-  id             Int      @id @default(autoincrement())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
-  name           String?
-  email          String   @unique
+  id             Int              @id @default(autoincrement())
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  email          String           @unique
   hashedPassword String?
-  role           String   @default("USER")
+  role           Roles            @default(USER)
+  subscription   SubscriptionPlan @default(BASIC)
+  profiles       Profile[]
 
   tokens   Token[]
   sessions Session[]
@@ -41,13 +42,11 @@ model Session {
 }
 
 model Token {
-  id          Int      @id @default(autoincrement())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
   hashedToken String
-  type        String
-  // See note below about TokenType enum
-  // type        TokenType
+  type        TokenType
   expiresAt   DateTime
   sentTo      String
 
@@ -57,9 +56,128 @@ model Token {
   @@unique([hashedToken, type])
 }
 
-// NOTE: It's highly recommended to use an enum for the token type
-//       but enums only work in Postgres.
-//       See: https://blitzjs.com/docs/database-overview#switch-to-postgre-sql
-// enum TokenType {
-//   RESET_PASSWORD
-// }
+model Profile {
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  name            String
+  profileImageUrl String?
+  user            User     @relation(fields: [userId], references: [id])
+  userId          Int
+  favourites      Media[]
+}
+
+model Media {
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  trailerUrl   String?
+  title        String
+  synopsis     String?
+  releaseDate  DateTime?
+  genre        Genres[]
+  actors       String[]
+  thumbnailUrl String?
+  movie        Movie?    @relation(fields: [movieId], references: [id])
+  serie        Serie?    @relation(fields: [serieId], references: [id])
+  movieId      Int?  @unique
+  serieId      Int?  @unique
+  Profile       Profile?  @relation(fields: [profileId], references: [id])
+  profileId     Int?
+
+  @@unique([movieId, serieId])
+
+}
+
+model Serie {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  seasons   Season[]
+  Media     Media?
+}
+
+model Season {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  episodes  Episode[]
+
+  serie     Serie @relation(fields: [serieId], references: [id])
+  serieId   Int
+}
+
+model Episode {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  episodeTitle String
+  file          File[]
+
+  season       Season @relation(fields: [seasonId], references: [id])
+  seasonId     Int
+}
+
+model Movie {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  file       File[]
+
+  Media     Media?
+}
+
+model File {
+  id         Int        @id @default(autoincrement())
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+  resolution Resolution
+  url        String
+  Episode    Episode?   @relation(fields: [episodeId], references: [id])
+  episodeId  Int?
+  Movie      Movie?     @relation(fields: [movieId], references: [id])
+  movieId    Int?
+}
+
+enum TokenType {
+  RESET_PASSWORD
+}
+
+enum Roles {
+  ADMIN
+  USER
+}
+
+enum SubscriptionPlan {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
+enum Genres {
+  ACTION
+  ADVENTURE
+  ANIMATION
+  COMEDY
+  CRIME
+  DOCUMENTARY
+  DRAMA
+  FAMILY
+  FANTASY
+  HISTORY
+  HORROR
+  MUSIC
+  MYSTERY
+  ROMANCE
+  SCIENCE_FICTION
+  TV_MOVIE
+  THRILLER
+  WAR
+  WESTERN
+}
+
+enum Resolution {
+  SD
+  HD
+  FHD
+}

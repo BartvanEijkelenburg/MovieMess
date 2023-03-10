@@ -1,14 +1,13 @@
-import { SimpleRolesIsAuthorized } from "@blitzjs/auth";
-import { User } from "db";
+import { SimpleRolesIsAuthorized } from '@blitzjs/auth';
+import { Roles, User } from 'db';
 
-export type Role = "ADMIN" | "USER"
-
-declare module "@blitzjs/auth" {
+declare module '@blitzjs/auth' {
   export interface Session {
-    isAuthorized: SimpleRolesIsAuthorized<Role>
+    isAuthorized: SimpleRolesIsAuthorized<Roles>;
     PublicData: {
-      userId: User["id"]
-      role: Role
-    }
+      userId: User['id'];
+      role: Roles;
+      email: string;
+    };
   }
 }
