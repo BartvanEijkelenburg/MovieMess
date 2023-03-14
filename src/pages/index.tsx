@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { Navbar } from '../core/components/Navbar';
 import { ScrollBarComponent } from '../core/components/ScrollBarComponent';
 import { Footer } from '../core/components/Footer';
-import Features from '../core/components/Features';
+import { PricingPlans } from '../core/components/Features';
 import { Divider } from '../core/components/Divider';
 import Link from 'next/link';
 
@@ -96,7 +96,7 @@ const Home: BlitzPage = () => {
       <Navbar />
       <HomePageHeroSection />
       <Divider text={'Pricing plans'} />
-      <Features />
+      <PricingPlans />
       <Footer />
     </Layout>
   );

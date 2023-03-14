@@ -38,7 +38,7 @@ export const LoginForm = () => {
   ) => {
     try {
       if (await loginMutation(values)) {
-        router.push('/app');
+        await router.push('/app');
       }
       form.reset();
     } catch (error) {

@@ -22,7 +22,7 @@ const plans = [
   },
 ];
 
-const PricingPlans = () => {
+export const PricingPlans = () => {
   return (
     <div className={'bg-black'}>
       <div className={'py-20'}>
@@ -85,5 +85,3 @@ const PricingPlans = () => {
     </div>
   );
 };
-
-export default PricingPlans;

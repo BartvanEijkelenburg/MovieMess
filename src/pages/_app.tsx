@@ -5,13 +5,15 @@ import { withBlitz } from 'src/blitz-client';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 import 'src/styles/globals.css';
-import { LoginFormWrapper } from '../auth/components/LoginFormWrapper';
+import { useRouter } from 'next/router';
 
 config.autoAddCss = false;
 
 function RootErrorFallback({ error }: ErrorFallbackProps) {
+  const router = useRouter();
   if (error instanceof AuthenticationError) {
-    return <LoginFormWrapper />;
+    void router.push('/login');
+    return <></>;
   } else if (error instanceof AuthorizationError) {
     return (
       <ErrorComponent
